@@ -98,17 +98,19 @@ def excluir_aluno(id_aluno):
     Dica: se o aluno tiver inscricoes, o SQLite levanta sqlite3.IntegrityError.
     Trate a excecao e devolva False nesse caso.
     """
-
+    conexao = conectar()
     try:
-        conexao = conectar()
         cursor = conexao.cursor()
-        cursor.execute("""DELETE FROM aluno where id = ?""",(id_aluno,))
+        cursor.execute("PRAGMA foreign_keys = ON;")
+        
+        cursor.execute("DELETE FROM aluno WHERE id = ?", (id_aluno,))
+        removidos = cursor.rowcount
+        conexao.commit()
+        return removidos > 0
     except sqlite3.IntegrityError:
         conexao.rollback()
         return False
-    
     finally:
-        conexao.commit()
         cursor.close()
         conexao.close()
         

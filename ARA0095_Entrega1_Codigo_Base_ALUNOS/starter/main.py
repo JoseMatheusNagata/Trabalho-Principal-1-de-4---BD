@@ -53,13 +53,36 @@ def menu_alunos():
                 print(f"  [{a[0]}] {a[1]} - {a[2]} | {a[3]} | {a[4]}")
 
         elif opcao == "3":
-            # TODO 7: pedir o id, buscar o aluno, avisar se nao existir,
+            # 7: pedir o id, buscar o aluno, avisar se nao existir,
             # ler os novos dados e chamar atualizar_aluno().
-            print(">> Ainda nao implementado.")
+            id_aluno = ler_inteiro("digite o id do aluno: ")
+            aluno = buscar_aluno_por_id(id_aluno)
+            if not aluno:
+                print(">> Aluno nao encontrado.")
+            else:
+                print(f">> Editando: {aluno[2]} (Matricula: {aluno[1]})")
+                nome = input("Novo Nome: ").strip()
+                email = input("Novo E-mail: ").strip()
+                nascimento = input("Novo Nascimento (AAAA-MM-DD): ").strip()
+
+            if not nome:
+                print(">> O nome nao pode ficar vazio.")
+                continue
+
+            sucesso = atualizar_aluno(id_aluno, nome, email, nascimento)
+            if sucesso:
+                print(">> Aluno atualizado com sucesso.")
+            else:
+                print(">> Falha ao atualizar o aluno.")
 
         elif opcao == "4":
-            # TODO 8: pedir o id e chamar excluir_aluno(), tratando o False.
-            print(">> Ainda nao implementado.")
+            # 8: pedir o id e chamar excluir_aluno(), tratando o False.
+            id_aluno = ler_inteiro("digite o id do aluno para excluir: ")
+            sucesso = excluir_aluno(id_aluno)
+            if sucesso:
+                print(">> Aluno excluido com sucesso.")
+            else:
+                print(">> Nao foi possivel excluir o aluno.")
 
         elif opcao == "0":
             return
@@ -68,9 +91,73 @@ def menu_alunos():
 
 
 def menu_disciplinas():
-    # TODO 9: espelhe menu_alunos() para as disciplinas.
-    print(">> Ainda nao implementado.")
+    # 9: espelhe menu_alunos() para as disciplinas.
+    while True:
+        print("""
+--- DISCIPLINA ---
+1) Cadastrar   2) Listar   3) Alterar   4) Excluir   0) Voltar""")
+        opcao = input("Opcao: ").strip()
+        if opcao == "1":                                   # PRONTO
+            codigo = input("Código: ").strip()
+            nome = input("Nome: ").strip()
+            carga_horaria = ler_inteiro("Carga Horária: ")
+            periodo = ler_inteiro("Período: ")
 
+            if not codigo or not nome or not carga_horaria:
+                print(">> Codigo, nome e carga horária sao obrigatorios.")
+                continue
+
+            nova_disciplina = inserir_disciplina(codigo, nome, carga_horaria, periodo)
+            if nova_disciplina is None:
+                print(">> Ja existe disciplina com esse codigo.")
+            else:
+                print(">> Disciplina cadastrada com id", nova_disciplina)
+
+
+        elif opcao == "2":
+            disciplinas = listar_disciplinas()
+            if not disciplinas:
+                print(">> Nenhuma disciplina cadastrada.")
+            for a in disciplinas:
+                print(f"  [{a[0]}] {a[1]} - {a[2]} | {a[3]} | {a[4]}")
+
+        elif opcao == "3":
+            # 7: pedir o id, buscar a disciplina, avisar se nao existir,
+            # ler os novos dados e chamar atualizar_disciplina().
+            id_disciplina = ler_inteiro("digite o id da disciplina: ")
+            disciplina = buscar_disciplina_por_id(id_disciplina)
+            if not disciplina:
+                print(">> Disciplina nao encontrado.")
+            else:
+                print(f">> Editando: {disciplina[2]} (Codigo: {disciplina[1]})")
+                nome = input("Novo Nome: ").strip()
+                carga_horaria = ler_inteiro("Nova Carga Horaria: ")
+                periodo = ler_inteiro("Novo Periodo: ")
+
+            if not nome:
+                print(">> O nome nao pode ficar vazio.")
+                continue
+
+            sucesso = atualizar_disciplina(id_disciplina, nome, carga_horaria, periodo)
+            if sucesso:
+                print(">> Disciplina atualizada com sucesso.")
+            else:
+                print(">> Falha ao atualizar disciplina.")
+
+        elif opcao == "4":
+            # 8: pedir o id e chamar excluir_disciplina(), tratando o False.
+            id_disciplina = ler_inteiro("digite o id do disciplina para excluir: ")
+            sucesso = excluir_disciplina(id_disciplina)
+            if sucesso:
+                print(">> Disciplina excluido com sucesso.")
+            else:
+                print(">> Nao foi possivel excluir a disciplina.")
+
+        elif opcao == "0":
+            return
+        else:
+            print(">> Opcao invalida.")
+        
 
 def main():
     criar_tabelas()

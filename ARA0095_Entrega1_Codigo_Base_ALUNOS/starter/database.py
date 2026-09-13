@@ -70,8 +70,8 @@ def criar_tabelas():
             nota2           REAL,
             aluno_id        INTEGER,
             disciplina_id   INTEGER,
-            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE SET NULL,
-            FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE SET NULL
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id),
+            FOREIGN KEY (disciplina_id) REFERENCES disciplina(id)
         )
     """)
 

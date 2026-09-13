@@ -7,7 +7,7 @@
 - **Disciplina:** ARA0095 — Desenvolvimento Rapido de Aplicacoes em Python
 - **Turma:**
 - **Integrantes do grupo:** (nome completo e matricula)
-  1.
+  1.José Matheus Nagata Kulibaba/202502195877
   2.
   3.
 

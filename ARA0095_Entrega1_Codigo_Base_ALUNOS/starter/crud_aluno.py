@@ -45,7 +45,6 @@ def listar_alunos():
     return alunos
 
 
-# --------------------------------------------------------- TODO 3
 def buscar_aluno_por_id(id_aluno):
     """Devolve uma tupla com os dados do aluno, ou None se nao existir.
 
@@ -63,7 +62,6 @@ def buscar_aluno_por_id(id_aluno):
 
 
 
-# --------------------------------------------------------- TODO 4
 def atualizar_aluno(id_aluno, nome, email, data_nascimento):
     """Atualiza nome, email e data de nascimento. Devolve True se mudou algo.
 
@@ -91,7 +89,6 @@ def atualizar_aluno(id_aluno, nome, email, data_nascimento):
     
 
 
-# --------------------------------------------------------- TODO 5
 def excluir_aluno(id_aluno):
     """Exclui um aluno pelo id. Devolve True se removeu alguma linha.
 
@@ -101,12 +98,13 @@ def excluir_aluno(id_aluno):
     conexao = conectar()
     try:
         cursor = conexao.cursor()
-        cursor.execute("PRAGMA foreign_keys = ON;")
-        
+        conexao.execute("PRAGMA foreign_keys = ON")
+
         cursor.execute("DELETE FROM aluno WHERE id = ?", (id_aluno,))
-        removidos = cursor.rowcount
+        
+        removido = cursor.rowcount > 0
         conexao.commit()
-        return removidos > 0
+        return removido
     except sqlite3.IntegrityError:
         conexao.rollback()
         return False

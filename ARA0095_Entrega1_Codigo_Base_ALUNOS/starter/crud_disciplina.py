@@ -23,6 +23,7 @@ def inserir_disciplina(codigo, nome, carga_horaria, periodo):
         conexao.commit()
         return cursor.lastrowid
     except sqlite3.IntegrityError:
+        conexao.rollback()
         return None
     finally:
         cursor.close()
@@ -81,6 +82,9 @@ def excluir_disciplina(id_disciplina):
         conexao = conectar()
         cursor = conexao.cursor()
         cursor.execute("""DELETE FROM disciplina where id = ?""",(id_disciplina,))
+        removido = cursor.rowcount > 0
+        conexao.commit()
+        return removido
     except sqlite3.IntegrityError:
         conexao.rollback()
         return False

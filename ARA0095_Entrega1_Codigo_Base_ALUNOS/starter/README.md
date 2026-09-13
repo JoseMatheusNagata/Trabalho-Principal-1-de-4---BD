@@ -24,14 +24,20 @@ python main.py       # abre o menu do sistema
 Descreva em poucas linhas as tabelas criadas, as chaves primarias, as chaves
 estrangeiras e por que a tabela `inscricao` foi necessaria.
 
-|
+tabela aluno: id chave primaria, matricula com auto incremento.
+tabela disciplina: id chave primaria, codigo unico.
+tabela inscricao: tabela como objetivo de relacionar n para n duas tabelas aluno e disciplina onde o aluno pode cursar varias disciplinas e uma disciplina pode conter varios alunos.
+id chave primaria, aluno_id referenciando aluno(id) e disciplina_id referenciando disciplina(id)
+
 
 ## Decisoes que tomamos
 
 Ex.: por que `data_nascimento` e TEXT; o que acontece ao tentar excluir um
 aluno que tem inscricoes; o que o grupo decidiu fazer nesse caso.
 
-|
+exclusao dos alunos com inscicoes que usa o PRAGMA ON, O sqlite rejeita a delecao dos alunos que tenham inscicoes.
+
+nos comandos de insert, update e delete usado o try except, se der certo da o commit() ou se der errado rollback()
 
 ## O que ficou faltando
 
